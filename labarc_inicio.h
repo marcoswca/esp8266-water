@@ -5,6 +5,12 @@
 #include <ArduinoOTA.h>
 #include <ESP8266HTTPClient.h>
 
+#include <SocketIOClient.h>
+SocketIOClient client;  
+
+char hostSocket[] = "http://web.cloud.lsd.ufcg.edu.br";
+int port = 42138;
+
 extern "C" {
   #include "user_interface.h"
   #include "spi_flash.h"
@@ -19,5 +25,9 @@ const char* password = "11223344r";
 
 void handleNotFound(){
   server.send(404, "text/plain", "Not Found\n\n");
+}
+
+void ondata(SocketIOClient client, char *data) {
+  Serial.print(data);
 }
 

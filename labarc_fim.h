@@ -40,6 +40,11 @@ void setup() {
 
   server.begin();
   Serial.println("HTTP Server Ready");
+
+  client.setDataArrivedDelegate(ondata);
+  if (!client.connect(hostSocket, port)) Serial.println(F("Not connected."));
+
+  if (client.connected()) client.send("Client here!");
 }
 
 //int next_time=0;
@@ -52,6 +57,7 @@ void loop() {
      led = 100-led;
      analogWrite(LED_BUILTIN,led);
      labarc_loop();
+     if (client.connected()) client.send("Hello, world!\n");
     // next_time += LOOP_INTERVAL;
   }
 }
